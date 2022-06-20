@@ -1,6 +1,9 @@
 body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 24px;
-    background-color: antiquewhite;
+    background-color: rgb(16, 214, 65);
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }
 
