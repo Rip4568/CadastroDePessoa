@@ -1,0 +1,38 @@
+{% extends "Main_app/base.html" %}
+
+{% block title %}Listagem e detalhamento de Contatos{% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+{% block li_a %}
+    {% comment %} <li><a href="{% url 'Pessoa_app:listarcontatoview' %}">Listar todos os Contatos</a></li>
+    <li><a href="{% url 'Pessoa_app:criarpessoaview' %}">Criar nova Pessoa</a></li> 
+    {% endcomment %}
+    
+{% endblock li_a %}
+
+{% block body %}
+<form action="" method="GET">
+    <input type="text" name="nome-buscar" id="nome-buscar" placeholder="Buscar por nome">
+    <input type="submit" value="Buscar">
+</form>
+<p>Nome : {{contatos.first.pessoa}} </p>
+<table>
+    <thead>
+        <tr>
+            <th>A</th>
+            <th>B</th>
+        </tr>
+        <tbody>
+            {% for contato in contatos %}
+                <tr>
+                    <td>Contato</td>
+                    <td>{{contato.contato}}</td>
+                    {% comment %} <td>{{pessoa.ativa}}</td> {% endcomment %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+{% endblock body %}

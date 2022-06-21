@@ -1,0 +1,17 @@
+{% extends 'Main_app/base.html' %}
+
+{% block title %}Formulario de Criação{% endblock title %}
+
+{% block head %}{% endblock head %}
+
+{% block header %}{% endblock header %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Criar nova Pessoa</button>
+    </form>
+{% endblock body %}
+
+{% block footer %}{% endblock footer %}

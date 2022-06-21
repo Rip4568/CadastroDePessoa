@@ -1,0 +1,54 @@
+{% extends "Main_app/base.html" %}
+
+{% block title %}Listagem de Pessoas{% endblock title %}
+
+{% block header %}
+{% endblock header %}
+
+{% block li_a %}
+    {% comment %} <li><a href="{% url 'Pessoa_app:listarcontatoview' %}">Listar todos os Contatos</a></li> {% endcomment %}
+    <li><a href="{% url 'Pessoa_app:criarpessoaview' %}">Criar nova Pessoa</a></li>
+{% endblock li_a %}
+
+{% block body %}
+<form action="" method="GET">
+    <input type="text" name="nome-buscar" id="nome-buscar" placeholder="Buscar por nome">
+    <input type="submit" value="Buscar">
+</form>
+<table>
+    <thead>
+        <tr>
+            <th>Nome da Pessoa</th>
+            <th>Data de Nascimento</th>
+            <th>Ativa?:</th>
+            <th>Ações</th>
+        </tr>
+        <tbody>
+            {% for pessoa in object_list %}
+                <tr>
+                    <td>{{pessoa.nome_completo}}</td>
+                    <td>{{pessoa.data_nascimento|date:"d/m/y"}}</td>
+                    {% comment %} <td>{{pessoa.ativa}}</td> {% endcomment %}
+                    {% if pessoa.ativa %}
+                        <td>Sim</td>
+                    {% else %}
+                        <td>Não</td>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'Pessoa_app:editarpessoaview' pessoa.pk %}">Editar</a>
+                        <a href="{% url 'Pessoa_app:excluirpessoaview' pessoa.pk %}">Excluir</a>
+                        <a href="{% url 'Pessoa_app:listarcontatoview' pessoa.pk %}">Contatos</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+{% if contatos %}
+    <p>Nome da pessoa : {{ pessoa.nome_completo }} </p>
+    {% for contato in contatos %}
+        <p>{{ contato }}</p>
+    {% endfor %}
+{% endif %}
+{% endblock body %}
+{% block footer %}{% endblock footer %}

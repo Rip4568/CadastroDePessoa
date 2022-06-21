@@ -1,0 +1,5 @@
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Você tem certeza na remoção de "{{ object.nome_completo }}" ?</p>
+    <input type="submit" value="Confirmar"> <input type="button" value="Voltar" onclick="location.href='/pessoas/'">
+</form>
