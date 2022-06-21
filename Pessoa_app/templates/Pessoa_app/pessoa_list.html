@@ -1,5 +1,7 @@
 {% extends "Main_app/base.html" %}
-
+{% comment %} CRIAR NOVO CONTATO :
+o botão ficara viisivel na pagina pessoa_list (nessa pagina)
+ou em acessar os detalhes da pessoa/contato ? {% endcomment %}
 {% block title %}Listagem de Pessoas{% endblock title %}
 
 {% block header %}
@@ -11,10 +13,12 @@
 {% endblock li_a %}
 
 {% block body %}
+{% comment %} buscador de pessoas por pesquisa {% endcomment %}
 <form action="" method="GET">
     <input type="text" name="nome-buscar" id="nome-buscar" placeholder="Buscar por nome">
     <input type="submit" value="Buscar">
 </form>
+
 <table>
     <thead>
         <tr>
@@ -37,7 +41,7 @@
                     <td>
                         <a href="{% url 'Pessoa_app:editarpessoaview' pessoa.pk %}">Editar</a>
                         <a href="{% url 'Pessoa_app:excluirpessoaview' pessoa.pk %}">Excluir</a>
-                        <a href="{% url 'Pessoa_app:listarcontatoview' pessoa.pk %}">Contatos</a>
+                        <a href="{% url 'Pessoa_app:listarcontatodef' pessoa.pk %}">Contatos</a>
                     </td>
                 </tr>
             {% endfor %}

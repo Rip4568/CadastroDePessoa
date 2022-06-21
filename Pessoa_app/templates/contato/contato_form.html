@@ -1,0 +1,18 @@
+{% extends "Main_app/base.html" %}
+
+{% block title %}Criar novo Contato{% endblock title %}
+
+{% block body %}
+
+{{request.path}}
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+
+    {% if '/pessoas/editarcontato/' in request.path %}
+    <input type="submit" value="Concluir edição do Contato">
+    {% else %}
+        <input type="submit" value="Novo contato">
+    {% endif %}
+</form>
+{% endblock body %}

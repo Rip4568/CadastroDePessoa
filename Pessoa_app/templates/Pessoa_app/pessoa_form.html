@@ -7,11 +7,16 @@
 {% block header %}{% endblock header %}
 
 {% block body %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if request.path == '/pessoas/criarpessoa/' %}
         <button type="submit">Criar nova Pessoa</button>
-    </form>
+    {% else %}
+        <button type="submit">Editar Pessoa</button>
+    {% endif %}
+</form>
 {% endblock body %}
 
 {% block footer %}{% endblock footer %}

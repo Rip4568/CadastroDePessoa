@@ -20,8 +20,8 @@ class Pessoa(models.Model):
 
 class Contato(models.Model):
     #esse modelo é usado para criar um relacionamento entre Pessoa e Contato
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)#pessoa a qual será vinculada o contato
-    tipo = models.CharField(max_length=1, choices=(('R', 'Residencial'), ('C', 'Comercial'), ('F', 'Fax'), ('E', 'E-mail'), ('M', 'Celular')))
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE,related_name='contato')#pessoa a qual será vinculada o contato
+    tipo = models.CharField(max_length=11, choices=(('Residencial', 'Residencial'), ('Comercial', 'Comercial'), ('Fax', 'Fax'), ('E-mail', 'E-mail'), ('Celular', 'Celular')))
     contato = models.CharField(max_length=256)
 
     class Meta:

@@ -1,8 +1,9 @@
-from django.http import Http404,HttpResponse
-from django.shortcuts import render
+from django.http import Http404,HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Contato, Pessoa
-from .forms import PessoaForm
+from .forms import ContatoForm, PessoaForm
 # Create your views here.
 #por padrão as classes instanciadas de views.generic já esperam que exista um template dentro da pasta do app
 #para ser chamada como o nome da classe, porém, se você quiser que o nome do template seja diferente, você pode passar o nome do template como segundo parâmetro
@@ -17,9 +18,9 @@ class ListaPessoaView(ListView):
         filtro_nome = self.request.GET.get('nome-buscar') or ''#retorna o valor do campo nome-buscar ou '' se não existir
         
         if filtro_nome:#se o valor do campo nome-buscar for diferente de None
-            query_set = query_set.filter(nome_completo__icontains=filtro_nome)
+            query_set = query_set.filter(nome_completo__icontains=filtro_nome)#filtra o queryset com o valor do campo nome-buscar
         
-        return query_set.filter(nome_completo__icontains=filtro_nome)#filtra o queryset com o valor do campo nome-buscar
+        return query_set
 
 class CriarPessoaView(CreateView):
     model = Pessoa #modelo que será usado para criar o objeto, aqui não é necessario passar o modelo, pois o modelo já é passado pelo form
@@ -40,12 +41,41 @@ class DeletarPessoaView(DeleteView):
     success_url = '/pessoas/'
 
 class ListaContatoView(ListView):
+    #def get(self,pk,request)
+    #code ...
     model = Contato
     queryset = Contato.objects.all().order_by('contato')
 
 
-def contatos(request,pk):
-    contatos = Contato.objects.filter(pessoa=pk)
-    pessoa = Pessoa.objects.get(pk=pk)
-    return render(request,'contato/contato_list.html',{'contatos':contatos,'pessoa':pessoa})
+def contatos(request,pk_pessoa):
+    contatos = Contato.objects.filter(pessoa_id=pk_pessoa)
+    return render(request,'contato/contato_list.html',{'contatos':contatos})
     #return render(request,'Pessoa_app/pessoa_list.html',{'contatos':contatos,'pessoa':pessoa})
+
+def criar_contato(request,pk_pessoa):
+    form = ContatoForm()
+    if request.method == 'POST':
+        form = ContatoForm(request.POST)
+        if form.is_valid():
+            contato = form.save(commit=False)
+            contato.pessoa_id = pk_pessoa
+            contato.save()
+            return HttpResponseRedirect('Pessoa_app:listarcontatodef',args={pk_pessoa})
+            return redirect(reverse('Pessoa_app:listarcontatodef',args={pk_pessoa}))
+    return render(request,'contato/contato_form.html',{'form':form,'pk_pessoa':pk_pessoa})
+
+def editar_contato(request,pk_pessoa,pk):
+    contato = get_object_or_404(Contato,pk=pk)
+    form = ContatoForm(instance=contato)#preencher os campos com o objeto contato
+    if request.method == 'POST':
+        form = ContatoForm(request.POST,instance=contato)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('Pessoa_app:listarcontatodef',args=[pk_pessoa]))
+    return render(request,'contato/contato_form.html',{'form':form})
+
+def deletar_contato(request,pk_pessoa,pk):
+    contato = get_object_or_404(Contato,pk=pk)
+    contato.delete()
+    return redirect(reverse('Pessoa_app:listarcontatodef',args=[pk_pessoa]))
+

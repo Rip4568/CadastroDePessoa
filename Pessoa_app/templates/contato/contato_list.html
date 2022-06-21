@@ -6,33 +6,34 @@
 {% endblock header %}
 
 {% block li_a %}
-    {% comment %} <li><a href="{% url 'Pessoa_app:listarcontatoview' %}">Listar todos os Contatos</a></li>
-    <li><a href="{% url 'Pessoa_app:criarpessoaview' %}">Criar nova Pessoa</a></li> 
-    {% endcomment %}
-    
 {% endblock li_a %}
 
 {% block body %}
+{% comment %} talvez remover esse campo de busca ? {% endcomment %}
 <form action="" method="GET">
     <input type="text" name="nome-buscar" id="nome-buscar" placeholder="Buscar por nome">
     <input type="submit" value="Buscar">
 </form>
+{% comment %} <a href="{% url 'Pessoa_app:criarcontatodef' contato.first.pk %}">Listar novo Contato</a> {% endcomment %}
 <p>Nome : {{contatos.first.pessoa}} </p>
 <table>
     <thead>
         <tr>
             <th>A</th>
-            <th>B</th>
+            <th>Contato da pessoa :</th>
         </tr>
         <tbody>
             {% for contato in contatos %}
                 <tr>
-                    <td>Contato</td>
+                    <td>{{contato.tipo}}</td>
                     <td>{{contato.contato}}</td>
                     {% comment %} <td>{{pessoa.ativa}}</td> {% endcomment %}
+                    <td><a href="{% url 'Pessoa_app:editarcontatodef' contatos.first.pessoa.pk contato.pk %}">Editar</a></td>
+                    <td><a href="{% url 'Pessoa_app:deletarcontatodef' contatos.first.pessoa.pk contato.pk %}">Remover</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </thead>
 </table>
+{% comment %} COLOCAR AQUI A OPÇÃO DE ADICIONAR NOVO CONTATO {% endcomment %}
 {% endblock body %}
