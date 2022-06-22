@@ -14,8 +14,7 @@
     <input type="text" name="nome-buscar" id="nome-buscar" placeholder="Buscar por nome">
     <input type="submit" value="Buscar">
 </form>
-{% comment %} <a href="{% url 'Pessoa_app:criarcontatodef' contato.first.pk %}">Listar novo Contato</a> {% endcomment %}
-<p>Nome : {{contatos.first.pessoa}} </p>
+<a href="{% url 'Pessoa_app:criarcontatodef' pk_pessoa %}">Listar novo Contato</a>
 <table>
     <thead>
         <tr>

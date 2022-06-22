@@ -9,13 +9,16 @@
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'Main_app:homeview' %}">Home</a></li>
-                <li><a href="{% url 'Pessoa_app:listapessoaview' %}">Listar Pessoas</a></li>
-                {% block li_a %}{% endblock li_a %}
-            </ul>
-        </nav>
+        {% if user.is_authenticated %}
+            <nav>
+                <ul>
+                    <li><a href="{% url 'Main_app:homeview' %}">Home</a></li>
+                    <li><a href="{% url 'Pessoa_app:listapessoaview' %}">Listar Pessoas</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% block li_a %}{% endblock li_a %}
+                </ul>
+            </nav>
+        {% endif %}
         {% block header %}{% endblock header %}
     </header>
 

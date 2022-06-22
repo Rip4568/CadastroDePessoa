@@ -1,0 +1,9 @@
+{% extends 'Main_app/base.html' %}
+{% block body %}
+{{request.user}}
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Login">    
+</form>
+{% endblock body %}

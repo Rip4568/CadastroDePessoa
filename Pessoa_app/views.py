@@ -1,7 +1,7 @@
 from django.http import Http404,HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from .models import Contato, Pessoa
 from .forms import ContatoForm, PessoaForm
 # Create your views here.
@@ -15,6 +15,7 @@ class ListaPessoaView(ListView):
 
     def get_queryset(self):#esse metodo é chamado automaticamente quando a view for chamada
         query_set = super().get_queryset()#retorna o queryset do pai
+        query_set = query_set.filter(usuario=self.request.user)#filtrar todas as pessoas com o usuario que criou
         filtro_nome = self.request.GET.get('nome-buscar') or ''#retorna o valor do campo nome-buscar ou '' se não existir
         
         if filtro_nome:#se o valor do campo nome-buscar for diferente de None
@@ -26,6 +27,11 @@ class CriarPessoaView(CreateView):
     model = Pessoa #modelo que será usado para criar o objeto, aqui não é necessario passar o modelo, pois o modelo já é passado pelo form
     form_class = PessoaForm #formulario que será usado para criar o objeto
     success_url = '/pessoas/' #url que será redirecionada após o sucesso da criação do objeto
+    
+    #agora precisamos garantir que o formulario seja vinculado ao usuario logado
+    def form_valid(self,form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 class EditarPessoaView(UpdateView):
     model = Pessoa
@@ -46,10 +52,21 @@ class ListaContatoView(ListView):
     model = Contato
     queryset = Contato.objects.all().order_by('contato')
 
+class ContatoDetailView(DetailView):
+    model = Contato
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        #from django.utils import timezone
+        #context['now'] = timezone.now
+        return context
+    
+
+
+
 
 def contatos(request,pk_pessoa):
     contatos = Contato.objects.filter(pessoa_id=pk_pessoa)
-    return render(request,'contato/contato_list.html',{'contatos':contatos})
+    return render(request,'contato/contato_list.html',{'contatos':contatos,'pk_pessoa':pk_pessoa})
     #return render(request,'Pessoa_app/pessoa_list.html',{'contatos':contatos,'pessoa':pessoa})
 
 def criar_contato(request,pk_pessoa):
@@ -60,8 +77,8 @@ def criar_contato(request,pk_pessoa):
             contato = form.save(commit=False)
             contato.pessoa_id = pk_pessoa
             contato.save()
-            return HttpResponseRedirect('Pessoa_app:listarcontatodef',args={pk_pessoa})
             return redirect(reverse('Pessoa_app:listarcontatodef',args={pk_pessoa}))
+            return HttpResponseRedirect('Pessoa_app:listarcontatodef',args={pk_pessoa})
     return render(request,'contato/contato_form.html',{'form':form,'pk_pessoa':pk_pessoa})
 
 def editar_contato(request,pk_pessoa,pk):
