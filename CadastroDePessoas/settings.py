@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-import os
+import CadastroDePessoas
+from dotenv import load_dotenv #instlado pelo comando pip install python-dotenv
 load_dotenv()
+import os
+import sys
 #load_dotenv vai procurar o arquivo .env e carregar todas as variaveis de ambientes
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')#carregado pela dependencia dot-env
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG',False)
+DEBUG = os.getenv('DEBUG',False)#carregado pela dependencia dot-env
 
 ALLOWED_HOSTS = ['*']
 
@@ -44,6 +46,8 @@ INSTALLED_APPS = [
     #apps instanciados
     'Main_app',
     'Pessoa_app',
+    'crispy_forms',
+    'pytest',
 ]
 
 MIDDLEWARE = [
@@ -92,7 +96,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
+""" AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
@@ -105,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
-]
+] """
 
 
 # Internationalization
@@ -133,5 +137,11 @@ STATIC_ROOT = 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+LOGIN_REDIRECT_URL = '/pessoas'
 LOGOUT_REDIRECT_URL = '/'
+#REGISTER_REDIRECT_URL = '/'
+
+
+#CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'CadastroDePessoas.settings'

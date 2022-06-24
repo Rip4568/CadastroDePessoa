@@ -18,6 +18,14 @@
                     {% block li_a %}{% endblock li_a %}
                 </ul>
             </nav>
+        {% else %}
+        <nav>
+            <ul>
+                <li><a href="{% url 'Main_app:registerview' %}">Registrar</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% block li_a_else %}{% endblock li_a_else %}
+            </ul>
+        </nav>
         {% endif %}
         {% block header %}{% endblock header %}
     </header>

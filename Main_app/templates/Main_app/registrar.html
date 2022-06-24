@@ -1,0 +1,11 @@
+{% extends "Main_app/base.html" %}
+{% block title %}Registrar novo usuario{% endblock title %}
+
+
+{% block body %}
+<form method="POST"><!-- colocando action inves de method -->
+    {{form.as_p}}
+    {% csrf_token %}
+    <input type="submit" value="Registrar">
+</form>
+{% endblock body %}
