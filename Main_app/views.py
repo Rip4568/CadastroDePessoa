@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 class HomeView(TemplateView):
     template_name = 'Main_app/index.html'#template que será renderizado
 
+
 class RegisterView(CreateView):#Classe para criar conta de usuario
     form_class = UserCreationForm
     template_name = 'Main_app/registrar.html'
