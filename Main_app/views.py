@@ -1,5 +1,6 @@
+from django.urls import reverse
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import TemplateView,FormView,CreateView
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -11,9 +12,7 @@ class HomeView(TemplateView):
 class RegisterView(CreateView):#Classe para criar conta de usuario
     form_class = UserCreationForm
     template_name = 'Main_app/registrar.html'
-#    success_url = '/pessoas'
-    def get_success_url(self) -> str:
-        return '/pessoas'
+    success_url = '/pessoas'
     
 
 class ChangeUserView(CreateView):#Classe para alterar formulario do usuario
