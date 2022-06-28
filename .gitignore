@@ -131,3 +131,5 @@ dmypy.json
 #configurações pessoais
 .vscode
 lembrete.txt
+
+staticfiles

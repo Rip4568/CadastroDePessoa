@@ -16,8 +16,7 @@ from dotenv import load_dotenv #instlado pelo comando pip install python-dotenv
 load_dotenv()
 import os
 import sys
-import django_on_heroku
-django_on_heroku.settings(locals())
+
 #load_dotenv vai procurar o arquivo .env e carregar todas as variaveis de ambientes
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
