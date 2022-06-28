@@ -62,8 +62,6 @@ class ContatoDetailView(DetailView):
     
 
 
-
-
 def contatos(request,pk_pessoa):
     contatos = Contato.objects.filter(pessoa_id=pk_pessoa)
     return render(request,'contato/contato_list.html',{'contatos':contatos,'pk_pessoa':pk_pessoa})
@@ -74,8 +72,8 @@ def criar_contato(request,pk_pessoa):
     if request.method == 'POST':
         form = ContatoForm(request.POST)
         if form.is_valid():
-            contato = form.save(commit=False)
-            contato.pessoa_id = pk_pessoa
+            contato = form.save(commit=False)#commit false = não registrar no banco de dados
+            contato.pessoa_id = pk_pessoa#o campo pessoa_id é o mesmo que esta no banco de dados
             contato.save()
             return redirect(reverse('Pessoa_app:listarcontatodef',args={pk_pessoa}))
             return HttpResponseRedirect('Pessoa_app:listarcontatodef',args={pk_pessoa})

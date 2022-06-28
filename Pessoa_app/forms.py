@@ -12,8 +12,7 @@ class PessoaForm(forms.ModelForm):
 
 
 class ContatoForm(forms.ModelForm):
-
-    
+    #configurações da classe aqui
     class Meta:
         model = Contato
         fields = ['tipo','contato']
