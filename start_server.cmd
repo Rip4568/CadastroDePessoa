@@ -1,1 +1,1 @@
-python manage.py runserver
+workon CadastroDePessoas & python manage.py runserver
