@@ -32,7 +32,7 @@ SECRET_KEY = "django-insecure-6=(0vl-zy-qv350*%)4ht)%l3qwd8wd@9ileeg!yxhy9_=34+@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.getenv('DEBUG',False)#carregado pela dependencia dot-env, caso não encontre por padrão será falso
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
