@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'CadastroDePessoas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-""" DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': os.path.join(BASE_DIR,'db.sqlite3'),
     }
-} """
+}
 
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',#padrão
         'NAME': 'db_CadastroDePessoas',#nome do banco de dados criado
@@ -104,7 +104,7 @@ DATABASES = {
         'HOST': 'localhost',#padrão
         'PORT': '5432',#padrão (podea lterar mas eh comun essa porta de entrada)
     }
-}
+} """
 
 
 # Password validation
